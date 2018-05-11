@@ -8,7 +8,7 @@ from os.path import abspath, join, realpath
 from unittest import TestCase
 
 logger = logging.getLogger(__name__)
-test_data_path = abspath(realpath(join(['tests', 'data'])))
+test_data_path = abspath(realpath(join('tests', 'data')))
 
 
 def setup_module():
