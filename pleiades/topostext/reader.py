@@ -8,6 +8,8 @@ import better_exceptions
 import logging
 from rdflib import Graph, Namespace
 from rdflib.namespace import RDF
+from rdflib.term import URIRef
+
 
 logger = logging.getLogger(__name__)
 
@@ -48,6 +50,15 @@ class ToposTextReader:
         triples = self._get_by_type(rdftype)
         triples = self.g.triples((None, RDF.type, getattr(ns, term)))
         self.counts[rdftype] = len(list(triples))
+
+    def _get_pleiades_from_place(self, topostext_uri: URIRef):
+        ns = self._get_namespace('skos')
+        matches = self.g.objects(
+            subject=topostext_uri, predicate=ns.exactMatch)
+        matches = [
+            s for s in matches if str(s).startswith(
+                'https://pleiades.stoa.org/places/')]
+        return matches
 
     def _get_by_type(self, rdftype: str):
         prefix, term = rdftype.split(':')

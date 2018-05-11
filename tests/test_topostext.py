@@ -50,3 +50,11 @@ class Test_This(TestCase):
             str(place_uris[0]), 'https://topostext.org/place/257326PThe')
         assert_true(isinstance(place_uris[0], URIRef))
 
+    def test_get_pleiades(self):
+        """Test getting Pleiades matches"""
+        topostext_uris = reader._get_by_type('lawd:Place')
+        pleiades_uris = reader._get_pleiades_from_place(topostext_uris[0])
+        assert_equal(len(pleiades_uris), 1)
+        assert_equal(
+            str(pleiades_uris[0]), 'https://pleiades.stoa.org/places/786017/')
+
