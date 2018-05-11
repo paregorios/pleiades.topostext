@@ -1,9 +1,13 @@
-# A sample Python project README file
+# Extract ToposText:Pleiades matches for upload to Pleiades
 
-This is the README file for the project.
+[_ToposText_](https://topostext.org/) is an excellent resource and every corresponding [_Pleiades_](https://pleiades.stoa.org) place resource should cite it with a link. Since _ToposText_ was created from a dump of _Pleiades_ data, and since the _ToposText_ team has taken care to keep track of the backlinks to _Pleiades_, it should be straightforward to extract the _Pleiades_:_ToposText_ pairs from [the _ToposText_ RDF dump](https://topostext.org/TT-downloads) and programmatically construct _Pleiades_ references to point at those pages.
 
-The file should use UTF-8 encoding and be written using [Github-flavored Markdown Text](https://guides.github.com/features/mastering-markdown/). It will be displayed as the package repository home page on [GitHub](https://github.com/), and should be written for that purpose. 
+This package is intended to accomplish that task.
 
-Note that, if and when the package is to be distributed via [PyPI](https://pypi.python.org/pypi)r, it will be necessary to convert this file to [reStructuredText](http://docutils.sourceforge.net/rst.html) format. [Pandoc](http://pandoc.org/) is the preferred tool for this task.
+At the moment, we only have test functionality (with nose):
 
-Typical contents for this file would include an overview of the project, basic usage examples, etc. Generally, including the project changelog in here is not a good idea, although a simple "What's New" section for the most recent version may be appropriate.
+```
+nosetests
+```
+
+ See issue tracker for next steps.
