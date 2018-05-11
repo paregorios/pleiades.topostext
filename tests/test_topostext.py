@@ -10,12 +10,14 @@ from unittest import TestCase
 
 
 logger = logging.getLogger(__name__)
-test_data_path = abspath(realpath(join('tests', 'data')))
+test_data_path = abspath(realpath(join('tests', 'data', 'pelagios.ttl')))
 
 
 def setup_module():
-    """Change me"""
-    pass
+    """Load test data with a reader"""
+    global reader
+    reader = ToposTextReader()
+    reader.load(test_data_path)
 
 
 def teardown_module():
@@ -24,6 +26,7 @@ def teardown_module():
 
 
 class Test_This(TestCase):
+    global reader
 
     def setUp(self):
         """Change me"""
@@ -33,6 +36,8 @@ class Test_This(TestCase):
         """Change me"""
         pass
 
-    def test_a(self):
-        """Change me"""
-        pass
+    def test_place_count(self):
+        """Test place count"""
+        count = reader.count()
+        assert_equal(count, 9)
+

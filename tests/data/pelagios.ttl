@@ -1,0 +1,147 @@
+@prefix cito: <http://purl.org/spar/cito> .
+@prefix cnt: <http://www.w3.org/2011/content#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix lawd: <http://lawd.info/ontology/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix dare: <https://dare.ht.lu.se/ontology#> .
+@prefix void: <http://vocab.deri.ie/void#> .
+<https://topostext.org/downloads/pelagios.ttl> a void:dataDump ;
+dcterms:title "ToposText" ; 
+ dcterms:publisher "Brady Kiesling and the Aikaterini Laskaridis Foundation" ;
+  foaf:homepage <https://topostext.org/> ; 
+dcterms:description "ToposText is a reference tool for Greco-Roman civilization. 600,000 attestations of 6800 mapped ancient places and 10300 ancient proper names, accessing a full-text library of 650+ ancient texts in English translation, most of the key works for Greek and Roman history, geography, and mythology. Links to the Greek/Latin original. Paragraphs dated by events described. Links to classics/archaeology resources. Most texts in the public domain. A project of the Aikaterini Laskaridis Foundation created by Brady Kiesling." ;
+dcterms:subject "Greece--Civilization--Sources" ; 
+dcterms:license <http://opendatacommons.org/licenses/by/> ;
+dcterms:temporal "2015-2018" ; 
+dcterms:modified "2018-01-26" 
+.
+<https://topostext.org/place/257326PThe> a lawd:Place ;
+rdfs:label "Thebes (Egypt)"@en ;
+dcterms:description "View 148 ancient references to Thebes: Bronze Age to Late Antique city near Luxor in Egypt (Thebes, Theban, Thebans, Egyptian Thebes, Diospolis, Dios polis, Thebae, Diospoli, Διόσπολις, Θήβας, Θῆβαι)"@en ;
+dcterms:subject "city" ;
+gn:countryCode "EG" ;
+skos:exactMatch <https://pleiades.stoa.org/places/786017/> ;
+skos:exactMatch <https://dare.ht.lu.se/places/21107/> ;
+lawd:hasName [ lawd:primaryForm "Θῆβαι"@grc ] ;
+foaf:primaryTopicOf <https://topostext.org/place/257326PThe> ;
+geo:location [ geo:lat 25.684 ; geo:long 32.641 ] ;
+dare:precision 20 ;
+dcterms:temporal "-750/640" ,
+<http://n2t.net/ark:/99152/p03wskd389m> ; 
+.
+<https://topostext.org/place/292255SAmm> a lawd:Place ;
+rdfs:label "Ammon Oracle (Egypt)"@en ;
+dcterms:description "View 111 ancient references to Ammon Oracle: famous Archaic to Roman oracle in the Egyptian desert at Siwa oasis (Ammon, Hammon)"@en ;
+dcterms:subject "sanctuary/temple" ;
+gn:countryCode "EG" ;
+skos:exactMatch <https://pleiades.stoa.org/places/716520/> ;
+skos:exactMatch <https://dare.ht.lu.se/places/21870/> ;
+lawd:hasName [ lawd:primaryForm "Ἀμμώνειον"@grc ] ;
+foaf:primaryTopicOf <https://topostext.org/place/292255SAmm> ;
+geo:location [ geo:lat 29.2052 ; geo:long 25.5435 ] ;
+dare:precision 2000 ;
+dcterms:temporal "-750/640" ,
+<http://n2t.net/ark:/99152/p03wskd389m> ; 
+.
+<https://topostext.org/place/298313PMem> a lawd:Place ;
+rdfs:label "Memphis (Egypt)"@en ;
+dcterms:description "View 309 ancient references to Memphis: Bronze Age to Hellenistic city near Mit Rahina in Egypt (Memphis, Μέμφιδι)"@en ;
+dcterms:subject "city" ;
+gn:countryCode "EG" ;
+skos:exactMatch <https://pleiades.stoa.org/places/736963/> ;
+skos:exactMatch <https://dare.ht.lu.se/places/21137/> ;
+lawd:hasName [ lawd:primaryForm "Μέμφις"@grc ] ;
+foaf:primaryTopicOf <https://topostext.org/place/298313PMem> ;
+geo:location [ geo:lat 29.849 ; geo:long 31.255 ] ;
+dare:precision 20 ;
+dcterms:temporal "-750/640" ,
+<http://n2t.net/ark:/99152/p03wskd389m> ; 
+.
+<https://topostext.org/place/299529PPer> a lawd:Place ;
+rdfs:label "Persepolis (Iran)"@en ;
+dcterms:description "View 29 ancient references to Persepolis: Achaemenid capital city and palace complex, Fars province, Iran (Persepolis)"@en ;
+dcterms:subject "city" ;
+gn:countryCode "IR" ;
+skos:exactMatch <https://pleiades.stoa.org/places/922695/> ;
+skos:exactMatch <https://dare.ht.lu.se/places/22222/> ;
+lawd:hasName [ lawd:primaryForm "Περσέπολις"@grc ] ;
+foaf:primaryTopicOf <https://topostext.org/place/299529PPer> ;
+geo:location [ geo:lat 29.9352 ; geo:long 52.8909 ] ;
+dare:precision 20 ;
+dcterms:temporal "-750/640" ,
+<http://n2t.net/ark:/99152/p03wskd389m> ; 
+.
+<https://topostext.org/place/309306UNau> a lawd:Place ;
+rdfs:label "Naukratis (Egypt)"@en ;
+dcterms:description "View 89 ancient references to Naukratis: Archaic to Classical Greek trading station on the Nile, at Kom Gieif in Egypt (Naucratis, Naucratian, Naucratians, Naukratis, Naucratite, Ναύκρατις)"@en ;
+dcterms:subject "settlement" ;
+gn:countryCode "EG" ;
+skos:exactMatch <https://pleiades.stoa.org/places/727169/> ;
+skos:exactMatch <https://dare.ht.lu.se/places/21703/> ;
+lawd:hasName [ lawd:primaryForm "Ναύκρατις"@grc ] ;
+foaf:primaryTopicOf <https://topostext.org/place/309306UNau> ;
+geo:location [ geo:lat 30.8972 ; geo:long 30.5925 ] ;
+dare:precision 200 ;
+dcterms:temporal "-750/640" ,
+<http://n2t.net/ark:/99152/p03wskd389m> ; 
+.
+<https://topostext.org/place/312299IPha> a lawd:Place ;
+rdfs:label "Pharos (Egypt)"@en ;
+dcterms:description "View 155 ancient references to Pharos: small island just off Alexandria, Egypt, site of the famous lighthouse (Pharos, Pharus, Pharian)"@en ;
+dcterms:subject "island" ;
+gn:countryCode "EG" ;
+skos:exactMatch <https://pleiades.stoa.org/places/727197/> ;
+skos:exactMatch <https://dare.ht.lu.se/places/22856/> ;
+lawd:hasName [ lawd:primaryForm "Φάρος"@grc ] ;
+foaf:primaryTopicOf <https://topostext.org/place/312299IPha> ;
+geo:location [ geo:lat 31.213 ; geo:long 29.8856 ] ;
+dare:precision 200 ;
+dcterms:temporal "-750/640" ,
+<http://n2t.net/ark:/99152/p03wskd389m> ; 
+.
+<https://topostext.org/place/312299PAle> a lawd:Place ;
+rdfs:label "Alexandria (Egypt)"@en ;
+dcterms:description "View 1272 ancient references to Alexandria: important Hellenistic to modern polis at Alexandria in Egypt (Alexandria, Alexandrian, Alexandrians, Alexandreia, Ἀλεξάνδρειαν, Ἀλεξάνδρειαι, Ἀλεξανδρείας, Ἀλεξάνδρεια)"@en ;
+dcterms:subject "city" ;
+gn:countryCode "EG" ;
+skos:exactMatch <https://pleiades.stoa.org/places/727070/> ;
+skos:exactMatch <https://dare.ht.lu.se/places/15898/> ;
+lawd:hasName [ lawd:primaryForm "Ἀλεξάνδρια"@grc ] ;
+foaf:primaryTopicOf <https://topostext.org/place/312299PAle> ;
+geo:location [ geo:lat 31.182 ; geo:long 29.897 ] ;
+dare:precision 20 ;
+dcterms:temporal "-750/640" ,
+<http://n2t.net/ark:/99152/p03wskd389m> ; 
+.
+<https://topostext.org/place/313301UHer> a lawd:Place ;
+rdfs:label "Herakleion (Egypt)"@en ;
+dcterms:description "View 5 ancient references to Herakleion: Egyptian trading port that flourished in the 4th c. BCE, now under water in Abu Qir bay, Egypt (Heracleium, Herakleotikon)"@en ;
+dcterms:subject "settlement" ;
+gn:countryCode "EG" ;
+skos:exactMatch <https://pleiades.stoa.org/places/727250/> ;
+skos:exactMatch <https://dare.ht.lu.se/places/28536/> ;
+lawd:hasName [ lawd:primaryForm "Ἡράκλειον"@grc ] ;
+foaf:primaryTopicOf <https://topostext.org/place/313301UHer> ;
+geo:location [ geo:lat 31.304 ; geo:long 30.1005 ] ;
+dare:precision 2000 ;
+dcterms:temporal "-750/640" ,
+<http://n2t.net/ark:/99152/p03wskd389m> ; 
+.
+<https://topostext.org/place/315344UGaz> a lawd:Place ;
+rdfs:label "Gaza (Palestine)"@en ;
+dcterms:description "View 109 ancient references to Gaza: Bronze Age through Modern settlement, Gaza in Palestine (Gaza, Gazaeans, Gazaei, Γάζα)"@en ;
+dcterms:subject "settlement" ;
+gn:countryCode "PS" ;
+skos:exactMatch <https://pleiades.stoa.org/places/687902/> ;
+skos:exactMatch <https://dare.ht.lu.se/places/21672/> ;
+lawd:hasName [ lawd:primaryForm "Γάζα"@grc ] ;
+foaf:primaryTopicOf <https://topostext.org/place/315344UGaz> ;
+geo:location [ geo:lat 31.523 ; geo:long 34.432 ] ;
+dare:precision 200 ;
+dcterms:temporal "-750/640" ,
+<http://n2t.net/ark:/99152/p03wskd389m> ; 
+.
