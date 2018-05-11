@@ -6,6 +6,7 @@ import logging
 from nose.tools import assert_equal, assert_false, assert_true, raises
 from os.path import abspath, join, realpath
 from pleiades.topostext.reader import ToposTextReader
+from rdflib.term import URIRef
 from unittest import TestCase
 
 
@@ -38,6 +39,14 @@ class Test_This(TestCase):
 
     def test_place_count(self):
         """Test place count"""
-        count = reader.count()
+        count = reader.count(rdftype='lawd:Place')
         assert_equal(count, 9)
+
+    def test_place_get(self):
+        """Test getting places"""
+        place_uris = reader._get_by_type('lawd:Place')
+        assert_equal(len(place_uris), 9)
+        assert_equal(
+            str(place_uris[0]), 'https://topostext.org/place/257326PThe')
+        assert_true(isinstance(place_uris[0], URIRef))
 
