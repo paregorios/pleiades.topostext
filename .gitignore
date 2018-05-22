@@ -4,7 +4,8 @@
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -128,4 +129,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
 *.bak
+reader_cache.sqlite
