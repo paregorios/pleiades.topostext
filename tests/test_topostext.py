@@ -85,15 +85,20 @@ class Test_This(TestCase):
 
     def test_match_places(self):
         """Test getting all Pleiades matches."""
-        assert_equal(9, len(reader.match_places()))
+        results = reader.match_places()
+        len(results) == 4
+        assert_true(isinstance(results, dict))
+        assert_equal(9, len(results['matched']))
 
     def test_match_places_check(self):
         """Test getting all Pleiades matches, with verification."""
-        matches = reader.match_places(check_pleiades=True)
+        results = reader.match_places(check_pleiades=True)
+        matches = results['matched']
         assert_equal(len(matches), 9)
         successes = [m for m in matches if m[2] and m[3]]
         assert_equal(len(successes), 8)
         failures = [m for m in matches if not(m[2])]
         assert_equal(len(failures), 1)
         assert_equal(failures[0][0], 'https://topostext.org/place/313301UHer')
+        assert_equal()
 
