@@ -145,3 +145,28 @@ dare:precision 200 ;
 dcterms:temporal "-750/640" ,
 <http://n2t.net/ark:/99152/p03wskd389m> ; 
 .
+<https://topostext.org/place/000000IAtl> a lawd:Place ;
+rdfs:label "Atlantis island (Mythic)"@en ;
+dcterms:description "View 34 ancient references to Atlantis I: sunken civilization of pious folk somewhere in the Atlantic (Atlantis, Atlantians)"@en ;
+dcterms:subject "island" ;
+lawd:hasName [ lawd:primaryForm "Ἀτλαντὶς"@grc ] ;
+foaf:primaryTopicOf <https://topostext.org/place/000000IAtl> ;
+geo:location [ geo:lat 0.001 ; geo:long 0.001 ] ;
+dare:precision "unlocated" ;
+dcterms:temporal "-750/640" ,
+<http://n2t.net/ark:/99152/p03wskd389m> ; 
+.
+<https://topostext.org/place/388233IAta> a lawd:Place ;
+rdfs:label "Atalante island (Phthiotida)"@en ;
+dcterms:description "View 19 ancient references to Atalante island: island, the modern Talandonisi, Central Greece (Atalanta, Atalante, Atlantis, Ἀταλάντης)"@en ;
+dcterms:subject "island" ;
+gn:countryCode "GR" ;
+skos:exactMatch <https://pleiades.stoa.org/places/540675/> ;
+skos:exactMatch <https://dare.ht.lu.se/places/43655/> ;
+lawd:hasName [ lawd:primaryForm "Ἀταλάντη"@grc ] ;
+foaf:primaryTopicOf <https://topostext.org/place/388233IAta> ;
+geo:location [ geo:lat 38.674 ; geo:long 23.095 ] ;
+dare:precision 20 ;
+dcterms:temporal "-750/640" ,
+<http://n2t.net/ark:/99152/p03wskd389m> ; 
+.
