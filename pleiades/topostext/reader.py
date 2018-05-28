@@ -180,11 +180,14 @@ class ToposTextReader:
                 else:
                     for result in results:
                         result_uri = result.data['uri']
-                        while result_uri.endswith('/'):
-                            result_uri = result_uri[:-1]
-                        while pleiades_uri.endswith('/'):
-                            pleiades_uri = pleiades_uri[:-1]
-                        if result_uri == pleiades_uri:
+                        if pleiades_uri is not None:
+                            while result_uri.endswith('/'):
+                                result_uri = result_uri[:-1]
+                            while pleiades_uri.endswith('/'):
+                                pleiades_uri = pleiades_uri[:-1]
+                        if pleiades_uri is None:
+                            checked[topo_uri]['alternates'].append(result_uri)
+                        elif result_uri == pleiades_uri:
                             checked[topo_uri]['agree'] = True
                         else:
                             checked[topo_uri]['alternates'].append(result_uri)
