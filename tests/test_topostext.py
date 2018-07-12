@@ -3,7 +3,7 @@
 """Test ToposText reading"""
 
 import logging
-from nose.tools import assert_equal, assert_false, assert_true, raises
+from nose.tools import assert_equal, assert_false, assert_true, raises, assert_is_none
 from os.path import abspath, join, realpath
 from pleiades.topostext.reader import ToposTextPlace, ToposTextReader
 from rdflib.term import URIRef
@@ -12,6 +12,7 @@ from unittest import TestCase
 
 logger = logging.getLogger(__name__)
 test_data_path = abspath(realpath(join('tests', 'data', 'pelagios.ttl')))
+pleiades_path = abspath(realpath(join('tests', 'data', 'pleiades_json')))
 
 
 def setup_module():
@@ -40,21 +41,22 @@ class Test_This(TestCase):
     def test_place_count(self):
         """Test place count"""
         count = reader.count(rdftype='lawd:Place')
-        assert_equal(count, 9)
+        assert_equal(count, 11)
 
     def test_place_get(self):
         """Test getting places"""
         place_uris = reader._get_by_type('lawd:Place')
-        assert_equal(len(place_uris), 9)
+        assert_equal(len(place_uris), 11)
         assert_equal(
-            str(place_uris[0]), 'https://topostext.org/place/257326PThe')
+            str(place_uris[0]), 'https://topostext.org/place/000000IAtl')
         assert_true(isinstance(place_uris[0], URIRef))
 
     def test_get_pleiades(self):
         """Test getting Pleiades matches"""
         topostext_uris = reader._get_by_type('lawd:Place')
         pleiades_uris = reader._get_pleiades_from_place(topostext_uris[0])
-        assert_equal(len(pleiades_uris), 1)
+        assert_equal(len(pleiades_uris), 0)
+        pleiades_uris = reader._get_pleiades_from_place(topostext_uris[1])
         assert_equal(
             str(pleiades_uris[0]), 'https://pleiades.stoa.org/places/786017/')
 
@@ -85,20 +87,17 @@ class Test_This(TestCase):
 
     def test_match_places(self):
         """Test getting all Pleiades matches."""
-        results = reader.match_places()
-        len(results) == 4
-        assert_true(isinstance(results, dict))
-        assert_equal(9, len(results['matched']))
+        matched, checked = reader.match_places()
+        assert_is_none(checked)
+        assert_true(isinstance(matched, dict))
+        assert_equal(11, len(matched))
 
     def test_match_places_check(self):
         """Test getting all Pleiades matches, with verification."""
-        results = reader.match_places(check_pleiades=True)
-        matches = results['matched']
-        assert_equal(len(matches), 9)
-        successes = [m for m in matches if m[2] and m[3]]
-        assert_equal(len(successes), 8)
-        failures = [m for m in matches if not(m[2])]
-        assert_equal(len(failures), 1)
-        assert_equal(failures[0][0], 'https://topostext.org/place/313301UHer')
-        assert_equal()
+        reader.load_pleiades(pleiades_path)
+        matched, checked = reader.match_places(check_pleiades=True)
+        assert_equal(len(matched), 11)
+        assert_equal(len(checked), 11)
+        failures = {k: v for k, v in checked.items() if not(v['agree'])}
+        assert_equal(len(failures), 3)
 

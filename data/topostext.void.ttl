@@ -1,0 +1,15 @@
+@prefix : <https://topostext.org/> .
+@prefix void: <http://vocab.deri.ie/void#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+:places a void:Dataset;
+  dcterms:title "ToposText";
+  dcterms:publisher "Brady Kiesling and the Aikaterini Laskaridis Foundation";
+  foaf:homepage <https://topostext.org/>;
+  dcterms:description "ToposText is a reference tool for Greco-Roman civilization. 600,000 attestations of 6800 mapped ancient places and 10300 ancient proper names, accessing a full-text library of 650+ ancient texts in English translation, most of the key works for Greek and Roman history, geography, and mythology. Links to the Greek/Latin original. Paragraphs dated by events described. Links to classics/archaeology resources. Most texts in the public domain. A project of the Aikaterini Laskaridis Foundation created by Brady Kiesling, impemented by Pavla A.E.";
+  dcterms:license <http://opendatacommons.org/licenses/by/>;
+  dcterms:temporal "2015-2018" ;
+  void:dataDump <https://topostext.org/downloads/pelagios.ttl> ;
+  .
+  

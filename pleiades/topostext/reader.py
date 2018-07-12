@@ -5,20 +5,19 @@ Read and index data from a ToposText TTL file
 """
 
 import better_exceptions
-import json
 import logging
-from os.path import abspath, join, realpath
+from pleiades.matcher.tools import MatchTool
+from pleiades.walker.walker import PleiadesWalker
+from pprint import pprint
 from rdflib import Graph, Namespace
 from rdflib.namespace import RDF
 from rdflib.term import BNode, Literal, URIRef
 import re
-import requests
-import requests_cache
 import sys
 from datetime import timedelta
+import sys
 
 logger = logging.getLogger(__name__)
-requests_cache.install_cache('reader_cache', expire_after=timedelta(weeks=1))
 
 
 THRESHOLD = 0.1
@@ -112,7 +111,7 @@ class ToposTextReader:
     def __init__(self):
         self.counts = {}
         self.namespaces = {}
-        self.pleiades_places = {}
+        self.pleiades_match_tool = None
         self.triple_index = {
             'rdf': {
                 'type': {}
@@ -123,6 +122,11 @@ class ToposTextReader:
     def load(self, path):
         self.g = Graph()
         self.g.parse(path, format='turtle')
+
+    def load_pleiades(self, path):
+        walker = PleiadesWalker(path=path)
+        place_count, place_collection = walker.walk()
+        self.pleiades_match_tool = MatchTool(place_collection)
 
     def count(self, rdftype='lawd:Place'):
         """Get count of triples parsed"""
@@ -135,120 +139,61 @@ class ToposTextReader:
 
     def match_places(
             self,
-            pleiades_path='https://pleiades.stoa.org/',
             check_pleiades=False):
         """Match ToposText lawd:Places to corresponding Pleiades places."""
         if self.count() > len(self.place_index):
             for uri in self._get_by_type('lawd:Place'):
                 self.get_place(uri)  # will be automatically indexed
-        matches = []
-        unmatched = []
-        failures_names = []
-        failures_proximity = []
+        matched = {}
         for uri, topos_place in self.place_index.items():
             pleiades_uris = [
                 m for m in topos_place.matches if 'pleiades.stoa.org' in m]
             if len(pleiades_uris) != 1:
-                msg = (
-                    'no Pleiades match indicated by ToposText for {}'
-                    ''.format(str(topos_place)))
-                logger.warning(msg)
-                unmatched.append(topos_place)
-                continue
-            name_match = None
-            proximity_match = None
-            if check_pleiades:
-                name_match = False
-                proximity_match = False
-                pleiades_uri = pleiades_uris[0]
-                pleiades_uri = pleiades_uri.split('/')
-                while pleiades_uri[-1] == '':
-                    pleiades_uri = pleiades_uri[0:-1]
-                if pleiades_path.startswith('http'):
-                    pleiades_uri.append('json')
-                    pleiades_uri = '/'.join(pleiades_uri)
-                    r = requests.get(pleiades_uri)
-                    if r.status_code == 200:
-                        pleiades_place = r.json()
-                else:
-                    parts = list(pleiades_uri[-1])
-                    parts = parts[0:len(parts)-2]
-                    parts.append(pleiades_uri[-1])
-                    path = join(pleiades_path, '{}.json'.format(join(*parts)))
-                    path = abspath(realpath(path))
-                    try:
-                        with open(path, 'r') as f:
-                            pleiades_place = json.load(f)
-                    except FileNotFoundError:
-                        msg = (
-                            'failed to find JSON file "{}" corresponding to '
-                            '"{}" for ToposText place "{}"'
-                            ''.format(path, pleiades_uri, uri))
-                        raise FileNotFoundError(msg)
-                    else:
-                        del f
-                pleiades_title = pleiades_place['title'].lower()
-                for topos_name in topos_place.names:
-                    if topos_name.lower() in pleiades_title:
-                        name_match = True
-                        break
-                if not name_match:
-                    pleiades_names = [
-                        n['attested'] for n in pleiades_place['names']]
-                    for n in pleiades_place['names']:
-                        pleiades_names.extend(n['romanized'].split(','))
-                    pleiades_names = [
-                        n.strip().lower() for n in pleiades_names if n is not None]
-                    pleiades_names = list(set(pleiades_names))
-                    pleiades_names = [n for n in pleiades_names if n != '']
-                    for topos_name in topos_place.names:
-                        if topos_name.lower() in pleiades_names:
-                            name_match = True
-                            break
-                if not name_match:
-                    msg = [
-                        (
-                            'name match failed between {} and {}'
-                            ''.format(uri, pleiades_uris[0])),
-                        ('topos names: {}'.format(topos_place.names)),
-                        ('pleiades_title: {}'.format(pleiades_title)),
-                        ('pleiades_names: {}'.format(pleiades_names))]
-                    logger.info('\n\t'.join(msg))
-                    failures_names.append(topos_place)
-                pleiades_lat = pleiades_place['reprPoint'][1]
-                pleiades_lon = pleiades_place['reprPoint'][0]
-                if len(topos_place.locations) > 1:
+                matched[str(uri)] = None
+            elif len(pleiades_uris) == 1:
+                matched[str(uri)] = pleiades_uris[0]
+            else:
+                raise RuntimeError('weird')
+        if check_pleiades:
+            if self.pleiades_match_tool is None:
+                raise RuntimeError(
+                    'pleiades match tool has not been initialized')
+            checked = {}
+            for topo_uri, pleiades_uri in matched.items():
+                topo_place = self.get_place(topo_uri)
+                if len(topo_place.locations) != 1:
                     raise RuntimeError(
-                        'unexpected multiple topos_place locations in {}'
-                        ''.format(uri))
-                topos_lat = float(topos_place.locations[0]['latitude'])
-                topos_lon = float(topos_place.locations[0]['longitude'])
-                lat_diff = abs(pleiades_lat - topos_lat)
-                lon_diff = abs(pleiades_lon - topos_lon)
-                if (
-                    lat_diff < THRESHOLD and
-                    lon_diff < THRESHOLD
-                ):
-                    proximity_match = True
+                        'wrong number of topos locations: {}'
+                        ''.format(len(topo_place.locations)))
+                tpl = topo_place.locations[0]
+                points = [(float(tpl['longitude']), float(tpl['latitude']))]
+                results = self.pleiades_match_tool.match(
+                    points=points,
+                    names=topo_place.names
+                )
+                checked[topo_uri] = {
+                    'agree': False,
+                    'alternates': []
+                }
+                if len(results) == 0 and pleiades_uri is None:
+                    checked[topo_uri]['agree'] = True
                 else:
-                    msg = [
-                        (
-                            'proximity match failed between {} and {}'
-                            ''.format(uri, pleiades_uris[0])),
-                        ('latitute difference: {}'.format(lat_diff)),
-                        ('longitude difference: {}'.format(lon_diff))]
-                    logger.info('\n\t'.join(msg))
-                    failures_proximity.append(topos_place)
-
-            matches.append(
-                (str(uri), pleiades_uris[0], name_match, proximity_match))
-        results = {
-            'matched': matches,
-            'unmatched': unmatched,
-            'name_failures': failures_names,
-            'proximity_failures': failures_proximity
-        }
-        return results
+                    for result in results:
+                        result_uri = result.data['uri']
+                        if pleiades_uri is not None:
+                            while result_uri.endswith('/'):
+                                result_uri = result_uri[:-1]
+                            while pleiades_uri.endswith('/'):
+                                pleiades_uri = pleiades_uri[:-1]
+                        if pleiades_uri is None:
+                            checked[topo_uri]['alternates'].append(result_uri)
+                        elif result_uri == pleiades_uri:
+                            checked[topo_uri]['agree'] = True
+                        else:
+                            checked[topo_uri]['alternates'].append(result_uri)
+            return (matched, checked)
+        else:
+            return (matched, None)
 
     def _count_triples(self, rdftype: str):
         """Query the graph for a triple count"""
