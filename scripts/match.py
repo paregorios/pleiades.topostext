@@ -84,15 +84,16 @@ def main(**kwargs):
                         'error_codes': []
                     }
                 finally:
-                    errors[c['access_uri']]['error_codes'].append('oversubscribed')
+                    errors[
+                        c['access_uri']]['error_codes'].append(
+                            'oversubscribed')
                     errors[c['access_uri']]['msg'].append(
                         'This is not the only ToposText place to claim '
                         'association with {}. See also: {}.'
                         ''.format(
                             pleiades_uri,
                             [d['access_uri'] for d in cc if
-                                d['access_uri'] != c['access_uri']])
-                        )
+                                d['access_uri'] != c['access_uri']]))
         else:
             references[pleiades_uri] = cc
 
@@ -183,8 +184,8 @@ def main(**kwargs):
             ' {}'.format(
                 len(
                     [e for uri, e in errors.items()
-                        if 'topos_yes_pleiades_multiple' in e['error_codes']]))
-            )
+                        if 'topos_yes_pleiades_multiple' in e['error_codes']]
+                )))
         print(
             '\tToposText asserts same Pleiades match for multiple entries:'
             ' {}'.format(
@@ -204,4 +205,4 @@ def main(**kwargs):
 
 if __name__ == "__main__":
     main(**configure_commandline(
-            OPTIONAL_ARGUMENTS, POSITIONAL_ARGUMENTS, DEFAULT_LOG_LEVEL))
+        OPTIONAL_ARGUMENTS, POSITIONAL_ARGUMENTS, DEFAULT_LOG_LEVEL))
